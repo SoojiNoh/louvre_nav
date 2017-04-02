@@ -33,7 +33,7 @@ class PagePreview extends Component {
       <div className="pagepreview">
         <div className="view">
           <span>{this.props.artworkData[this.props.selectedArtwork].title}</span>
-          <img src="http://www.artinculture.kr/admin/contents/online/file/174/Figure+skating,+John+Foster_2010_Oil+on+canvas_193.9+x+112.1c..."></img>
+          <img src={require('../../public/images/'+this.props.selectedArtwork+'.jpg')}></img>
         </div>
       </div>
       );
