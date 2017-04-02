@@ -18,7 +18,7 @@ class NavMini extends Component {
     // console.log(this.props.num);
     return (
       <div onClick={this.props.onClick}>
-        <li>{this.props.artwork.title}</li>
+        <li className="navMiniItem">{this.props.artwork.title}</li>
       </div>
     );
   }

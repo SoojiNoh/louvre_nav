@@ -32,7 +32,6 @@ class PagePreview extends Component {
       return (
       <div className="pagepreview">
         <div className="view">
-          <span>{this.props.artworkData[this.props.selectedArtwork].title}</span>
           <img src={require('../../public/images/'+this.props.selectedArtwork+'.jpg')}></img>
         </div>
       </div>

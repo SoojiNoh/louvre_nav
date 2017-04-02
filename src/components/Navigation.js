@@ -19,7 +19,7 @@ class Navigation extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      alreadyNavItem: false,
+      alreadyNav: false,
       selectedKey: -1,
       navData: [{
         title: 'Home',
@@ -41,30 +41,29 @@ class Navigation extends Component {
   }
 
   handleClick(key) {
-    if (this.state.alreadyNavItem) {
-      let navItem = document.getElementsByClassName('navItem')[this.state.selectedKey];
-      navItem.classList.remove('active');
+
+    let navItem = document.getElementsByClassName('navItem');
+    let navMini = document.getElementsByClassName('navmini')[0];
+
+    if (this.state.alreadyNav) {
+      navItem[this.state.selectedKey].classList.remove('active');
     }
 
-    const navItem = document.getElementsByClassName('navItem')[key];
-    navItem.classList.add('active');
+    navItem[key].classList.add('active');
 
-    if(navItem.innerText=='ARTWORK'){
-      let navMini = document.getElementsByClassName('navmini');
-      navMini[0].classList.remove('inactive');
+    if(navItem[key].innerText=='ARTWORK'){
+      navMini.classList.remove('inactive');
+    } else {
+      navMini.classList.add('inactive');
     }
-
     this.setState({
-      alreadyNavItem: true,
+      alreadyNav: true,
       selectedKey: key,
     });
-
-
   }
 
 
   render() {
-    console.log(document.getElementsByClassName('navmini'));
     const mapToComponents = (data) =>{
       return data.map((navData, i) => {
         return (<NavigationItem navItem={navData} key={i} onClick={() => this.handleClick(i)} />);
