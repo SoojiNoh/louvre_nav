@@ -1,4 +1,6 @@
 import React, { Component, PropTypes } from 'react';
+import { connect } from 'react-redux';
+import * as actions from '../actions';
 
 const propTypes = {
 
@@ -14,18 +16,39 @@ class PagePreview extends Component {
       super(props);
   }
 
+
   render() {
-    return (
+
+      let selectedArtwork = this.props.selectedArtwork;
+
+      // console.log(this.d.artworkData.title);
+      console.log(this.props.selectedArtwork);
+
+    if (this.props.selectedArtwork === -1 ) {
+      return (
+        <div></div>
+      );
+    } else {
+      return (
       <div className="pagepreview">
         <div className="view">
+          <span>{this.props.artworkData[this.props.selectedArtwork].title}</span>
           <img src="http://www.artinculture.kr/admin/contents/online/file/174/Figure+skating,+John+Foster_2010_Oil+on+canvas_193.9+x+112.1c..."></img>
         </div>
       </div>
-    );
+      );
+    }
   }
 }
 
 PagePreview.propTypes = propTypes;
 PagePreview.defaultProps = defaultProps;
 
-export default PagePreview;
+const mapStateToProps = (state) => {
+  return {
+    artworkData: state.artworks.artworkData,
+  };
+};
+
+
+export default connect(mapStateToProps)(PagePreview);

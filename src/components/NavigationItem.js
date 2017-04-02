@@ -1,37 +1,61 @@
 import React, { Component, PropTypes } from 'react';
 import NavMini from './NavMini';
+import { connect } from 'react-redux';
+import * as actions from '../actions';
 
 const propTypes = {
   navItem: React.PropTypes.object,
-  key: React.PropTypes.integer,
 };
 
 const defaultProps = {
   navItem: false,
-  key: -1,
 };
 
-export default class NavigationItem extends Component {
+class NavigationItem extends Component {
+
 
   constructor(props) {
     super(props);
-    // this.handleClick=this.handleClick.bind(this);
+    this.handleClick = this.handleClick.bind(this);
+  }
+
+  handleClick(selectedArtwork) {
+    console.log(selectedArtwork);
+    this.props.handlePreview(selectedArtwork);
   }
 
   render() {
-    console.log(this.props.navItem.title);
+    // console.log(this.props.navItem.title);
+    const mapToComponents = (data) =>{
+      return data.map((artworkData, i) => {
+        return (<NavMini artwork={artworkData} num={i} key={i} onClick={()=>this.handleClick(i)} />);
+      });
+    };
+
     return (
       <div onClick={this.props.onClick}>
         <li className="navitem"><a href="#">{this.props.navItem.title}</a></li>
-        {this.props.navItem.title === 'Artwork' ? <NavMini /> : ''}
+        {this.props.navItem.title === 'Artwork' ?
+          <ul>{mapToComponents(this.props.artworkData)}</ul> : ''}
       </div>
     );
   }
 }
 
-// <li><a href="#">Home</a></li>
-// <li><a href="#">Statement</a></li>
-// <li><a href="#">Collection</a></li>
-// <li className="active"><a href="#">Artwork</a></li>
-// <li><a href="#">Profile</a></li>
-// <li><a href="#">Location</a></li>
+const mapStateToProps = (state) => {
+  return {
+    artworkData: state.artworks.artworkData,
+  };
+};
+
+const mapDispatchToProps = (dispatch) => {
+  return {
+    handlePreview: (selectedArtwork) => {dispatch(actions.previewArtwork(selectedArtwork)); },
+    // handleIncrement: () => { dispatch(actions.increment()); },
+    // handleDecrement: () => { dispatch(actions.decrement()); },
+    // handleSetColor: (color) => { dispatch(actions.setColor(color)); },
+  }
+  // return bindActionCreators(actions, dispatch);
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(NavigationItem);

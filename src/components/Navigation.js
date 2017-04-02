@@ -3,6 +3,9 @@ import './Navigation.css';
 import NavigationItem from './NavigationItem'
 import PagePreview from './PagePreview';
 import Header from './Header';
+
+import { connect } from 'react-redux';
+
 const propTypes = {
 
 };
@@ -10,7 +13,8 @@ const propTypes = {
 const defaultProps = {
 };
 
-class MyComponent extends Component {
+
+class Navigation extends Component {
 
   constructor(props) {
     super(props);
@@ -31,26 +35,15 @@ class MyComponent extends Component {
         title: 'Location',
       },
       ],
-      artworkData: [{
-        title: 'Running Deer',
-      }, {
-        title: 'Chris Crick',
-      }, {
-        title: 'Club Swinging',
-      }, {
-        title: 'Figure skating',
-      }, {
-        title: 'Gunfighter',
-      }, {
-        title: 'Portrait of Smoky',
-      },
-      ],
     };
 
     this.handleClick = this.handleClick.bind(this);
   }
 
   handleClick(key) {
+
+    // console.log(key);
+
     if (!this.state.alreadyNavItem) {
       const navItem = document.getElementsByClassName('navItem')[key];
       navItem.classList.add('active');
@@ -65,29 +58,10 @@ class MyComponent extends Component {
       selectedKey: key,
     });
   }
-    // console.log(mindButton);
-    // const mindButtonCoord = mindButton.getBoundingClientRect();
-    // const popup = document.getElementsByClassName("popup")[0];
-    // const popupCoordsX = mindButtonCoord.left + window.scrollX;
-    // const popupCoordsY = mindButtonCoord.top + window.scrollY;
-    //
-    // if(!this.state.alreadyPopup) {
-    //   mindButton.classList.add('clicked');
-    //   popup.classList.add('visible');
-    // } else {
-    //   mindButton.classList.remove('clicked');
-    //   popup.classList.remove('visible');
-    // }
-    // // console.log(popup);
-    //
-    // popup.style.transform = `translate(${popupCoordsX}px, ${popupCoordsY}px)`;
-    //
-    // this.setState({
-    //   alreadyPopup: !this.state.alreadyPopup,
-    // });
 
 
   render() {
+    console.log("selectedArtwork : "+ this.props.selectedArtwork);
 
     const mapToComponents = (data) =>{
       return data.map((navData, i) => {
@@ -105,14 +79,36 @@ class MyComponent extends Component {
               </ul>
             </nav>
           </div>
-          <PagePreview />
+          <PagePreview
+            artworkData={this.props.artworkData}
+            selectedArtwork={this.props.selectedArtwork}/>
         </div>
       </div>
     );
   }
 }
 
-MyComponent.propTypes = propTypes;
-MyComponent.defaultProps = defaultProps;
+Navigation.propTypes = propTypes;
+Navigation.defaultProps = defaultProps;
 
-export default MyComponent;
+
+const mapStateToProps = (state) => {
+  return {
+    selectedArtwork: state.artworks.selectedArtwork,
+    artworkData: state.artworks.artworkData,
+  };
+
+};
+
+const mapDispatchToProps = (dispatch) => {
+  return {
+    // handlePreview: (selectedArtwork) => {dispatch(actions.previewArtwork(selectedArtwork)); },
+    // handleIncrement: () => { dispatch(actions.increment()); },
+    // handleDecrement: () => { dispatch(actions.decrement()); },
+    // handleSetColor: (color) => { dispatch(actions.setColor(color)); },
+  // return bindActionCreators(actions, dispatch);
+  };
+};
+
+
+export default connect(mapStateToProps, mapDispatchToProps)(Navigation);
