@@ -36,7 +36,7 @@ class NavigationItem extends Component {
       <div onClick={this.props.onClick}>
         <li className="navitem"><a href="#">{this.props.navItem.title}</a></li>
         {this.props.navItem.title === 'Artwork' ?
-          <ul>{mapToComponents(this.props.artworkData)}</ul> : ''}
+          <ul className="navmini inactive">{mapToComponents(this.props.artworkData)}</ul> : ''}
       </div>
     );
   }

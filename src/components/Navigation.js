@@ -41,28 +41,30 @@ class Navigation extends Component {
   }
 
   handleClick(key) {
-
-    // console.log(key);
-
-    if (!this.state.alreadyNavItem) {
-      const navItem = document.getElementsByClassName('navItem')[key];
-      navItem.classList.add('active');
-      this.setState({ alreadyNavItem: true });
-    } else {
+    if (this.state.alreadyNavItem) {
       let navItem = document.getElementsByClassName('navItem')[this.state.selectedKey];
       navItem.classList.remove('active');
-      navItem = document.getElementsByClassName('navItem')[key];
-      navItem.classList.add('active');
     }
+
+    const navItem = document.getElementsByClassName('navItem')[key];
+    navItem.classList.add('active');
+
+    if(navItem.innerText=='ARTWORK'){
+      let navMini = document.getElementsByClassName('navmini');
+      navMini[0].classList.remove('inactive');
+    }
+
     this.setState({
+      alreadyNavItem: true,
       selectedKey: key,
     });
+
+
   }
 
 
   render() {
-    console.log("selectedArtwork : "+ this.props.selectedArtwork);
-
+    console.log(document.getElementsByClassName('navmini'));
     const mapToComponents = (data) =>{
       return data.map((navData, i) => {
         return (<NavigationItem navItem={navData} key={i} onClick={() => this.handleClick(i)} />);
