@@ -44,6 +44,8 @@ class Navigation extends Component {
 
     let navItem = document.getElementsByClassName('navItem');
     let navMini = document.getElementsByClassName('navmini')[0];
+    let preview = document.getElementsByClassName('pagepreview')[0];
+    console.log(preview);
 
     if (this.state.alreadyNav) {
       navItem[this.state.selectedKey].classList.remove('active');
@@ -53,8 +55,10 @@ class Navigation extends Component {
 
     if(navItem[key].innerText=='ARTWORK'){
       navMini.classList.remove('inactive');
+      if (typeof preview !== 'undefined') {preview.classList.remove('inactive') };
     } else {
       navMini.classList.add('inactive');
+      preview.classList.add('inactive');
     }
     this.setState({
       alreadyNav: true,

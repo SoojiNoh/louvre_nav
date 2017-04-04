@@ -16,12 +16,35 @@ class NavigationItem extends Component {
 
   constructor(props) {
     super(props);
+    this.state = {
+      alreadyNavmini: false,
+      prevSelectedArtwork: -1,
+    },
     this.handleClick = this.handleClick.bind(this);
   }
 
   handleClick(selectedArtwork) {
     console.log(selectedArtwork);
     this.props.handlePreview(selectedArtwork);
+
+    let navminiItem = document.getElementsByClassName('navminiItem');
+    //
+    if (this.state.alreadyNavmini) {
+      navminiItem[this.state.prevSelectedArtwork].classList.remove('active');
+    }
+    //
+    navminiItem[selectedArtwork].classList.add('active');
+    //
+    // if(navItem[key].innerText=='ARTWORK'){
+    //   navMini.classList.remove('inactive');
+    // } else {
+    //   navMini.classList.add('inactive');
+    // }
+    this.setState({
+      alreadyNavmini: true,
+      prevSelectedArtwork: selectedArtwork,
+    //   selectedKey: key,
+    });
   }
 
   render() {
